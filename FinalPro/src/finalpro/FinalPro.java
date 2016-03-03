@@ -12,11 +12,16 @@ import java.io.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.rmi.CORBA.Util;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.Scalar;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 /**
@@ -26,6 +31,44 @@ import org.opencv.imgproc.Imgproc;
 public class FinalPro {
 
     public static void main(String[] args) {
+
+        Mat maskedImage = threshholding();
+        List<MatOfPoint> contours = new ArrayList<>();
+        Mat hierarchy = new Mat();
+        Mat frame = new Mat();
+
+// find contours
+        Imgproc.findContours(maskedImage, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
+
+// if any contour exist...
+        if (hierarchy.size().height > 0 && hierarchy.size().width > 0) {
+            // for each contour, display it in blue
+            for (int idx = 0; idx >= 0; idx = (int) hierarchy.get(0, idx)[0]) {
+                Imgproc.drawContours(frame, contours, idx, new Scalar(250, 0, 0));
+                Imgcodecs.imwrite("C:/QuadPotroler/FinalPro/src/images/id" + idx + ".jpg", frame);
+
+            }
+        }
+    }
+
+    public static Mat threshholding() {
+        Mat destination = null;
+        try {
+            System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+            Mat source = Imgcodecs.imread("C:/QuadPotroler/FinalPro/src/images/20151207_153915.jpg", Imgcodecs.CV_LOAD_IMAGE_COLOR);
+            destination = new Mat(source.rows(), source.cols(), source.type());
+            destination = source;
+            Imgproc.threshold(source, destination, 127, 255, Imgproc.THRESH_TOZERO);
+            Imgcodecs.imwrite("C:/QuadPotroler/FinalPro/src/images/threshdold.jpg", destination);
+
+        } catch (Exception e) {
+            System.out.println("error: " + e.getMessage());
+        }
+
+        return destination;
+    }
+
+    public static void imageToGray() {
         try {
 
             System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -38,7 +81,7 @@ public class FinalPro {
             Mat mat = new Mat(image.getHeight(), image.getWidth(), CvType.CV_8UC3);
             mat.put(0, 0, data);
             Mat mat1 = new Mat(image.getHeight(), image.getWidth(), CvType.CV_8UC1);
-            
+
             Imgproc.cvtColor(mat, mat1, Imgproc.COLOR_RGB2GRAY);
             byte[] data1 = new byte[mat1.rows() * mat1.cols() * (int) (mat1.elemSize())];
             mat1.get(0, 0, data1);
