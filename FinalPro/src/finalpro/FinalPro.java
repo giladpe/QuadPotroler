@@ -33,6 +33,21 @@ public class FinalPro {
     public static void main(String[] args) {
 
         Mat maskedImage = threshholding();
+//        //  Mat source = Imgcodecs.imread("C:/QuadPotroler/FinalPro/src/images/20151207_153915.jpg", Imgcodecs.CV_LOAD_IMAGE_COLOR);
+//
+//        final Mat dst = new Mat(maskedImage.rows(), maskedImage.cols(), maskedImage.type());
+//        maskedImage.copyTo(dst);
+//
+//        Imgproc.cvtColor(dst, dst, Imgproc.COLOR_BGR2GRAY);
+//
+//        final List<MatOfPoint> points = new ArrayList<>();
+//        final Mat hierarchy = new Mat();
+//        Imgproc.findContours(dst, points, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
+//
+//        Imgproc.cvtColor(dst, dst, Imgproc.COLOR_GRAY2BGR);
+//        Imgcodecs.imwrite("C:/QuadPotroler/FinalPro/src/images/id1.jpg", dst);
+
+        // return dst;
         List<MatOfPoint> contours = new ArrayList<>();
         Mat hierarchy = new Mat();
         Mat frame = new Mat();
@@ -53,9 +68,10 @@ public class FinalPro {
 
     public static Mat threshholding() {
         Mat destination = null;
+        Mat source = null;
         try {
             System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-            Mat source = Imgcodecs.imread("C:/QuadPotroler/FinalPro/src/images/20151207_153915.jpg", Imgcodecs.CV_LOAD_IMAGE_COLOR);
+            source = Imgcodecs.imread("C:/QuadPotroler/FinalPro/src/images/20151207_153915.jpg", Imgcodecs.CV_LOAD_IMAGE_COLOR);
             destination = new Mat(source.rows(), source.cols(), source.type());
             destination = source;
             Imgproc.threshold(source, destination, 127, 255, Imgproc.THRESH_TOZERO);
