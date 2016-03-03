@@ -6,6 +6,7 @@
 package finalpro;
 
 import static com.sun.javafx.runtime.SystemProperties.getCodebase;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 import java.io.*;
@@ -32,38 +33,34 @@ public class FinalPro {
 
     public static void main(String[] args) {
 
-        Mat maskedImage = threshholding();
-//        //  Mat source = Imgcodecs.imread("C:/QuadPotroler/FinalPro/src/images/20151207_153915.jpg", Imgcodecs.CV_LOAD_IMAGE_COLOR);
-//
-//        final Mat dst = new Mat(maskedImage.rows(), maskedImage.cols(), maskedImage.type());
-//        maskedImage.copyTo(dst);
-//
-//        Imgproc.cvtColor(dst, dst, Imgproc.COLOR_BGR2GRAY);
-//
-//        final List<MatOfPoint> points = new ArrayList<>();
-//        final Mat hierarchy = new Mat();
-//        Imgproc.findContours(dst, points, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
-//
-//        Imgproc.cvtColor(dst, dst, Imgproc.COLOR_GRAY2BGR);
-//        Imgcodecs.imwrite("C:/QuadPotroler/FinalPro/src/images/id1.jpg", dst);
+        double percentege = 0;
+        int imagePixselsize = 0;
+   //     imageToGray();
 
-        // return dst;
-        List<MatOfPoint> contours = new ArrayList<>();
-        Mat hierarchy = new Mat();
-        Mat frame = new Mat();
+        try {
+            System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+            File input = new File("C:/QuadPotroler/FinalPro/src/images/20151207_153915.jpg");
 
-// find contours
-        Imgproc.findContours(maskedImage, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
+            BufferedImage image = ImageIO.read(input);
+            int w = image.getWidth();
+            int h = image.getHeight();
 
-// if any contour exist...
-        if (hierarchy.size().height > 0 && hierarchy.size().width > 0) {
-            // for each contour, display it in blue
-            for (int idx = 0; idx >= 0; idx = (int) hierarchy.get(0, idx)[0]) {
-                Imgproc.drawContours(frame, contours, idx, new Scalar(250, 0, 0));
-                Imgcodecs.imwrite("C:/QuadPotroler/FinalPro/src/images/id" + idx + ".jpg", frame);
+            imagePixselsize = w + h;
+            int[] dataBuffInt = image.getRGB(0, 0, w, h, null, 0, w);
 
-            }
+            Color c = new Color(dataBuffInt[100]);
+
+            int r = (c.getRed());   // = (dataBuffInt[100] >> 16) & 0xFF
+            int g = (c.getGreen()); // = (dataBuffInt[100] >> 8)  & 0xFF
+            int b = (c.getBlue());  // = (dataBuffInt[100] >> 0)  & 0xFF
+            int a = (c.getAlpha()); // = (dataBuffInt[100] >> 24) & 0xFF
+
+            percentege = ((r + g + b + a) / 1020) * 100;
+            System.out.println(percentege + "%");
+
+        } catch (Exception e) {
         }
+
     }
 
     public static Mat threshholding() {
@@ -89,7 +86,6 @@ public class FinalPro {
 
             System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
             File input = new File("C:/QuadPotroler/FinalPro/src/images/20151207_153915.jpg");
-
             BufferedImage image = ImageIO.read(input);
 
             byte[] data = ((DataBufferByte) image.getRaster().
