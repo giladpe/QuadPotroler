@@ -25,8 +25,9 @@ public class FinalPro {
    
     public static void main(String[] args) {
         try {
+             
             System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-            File input = new File("/images/20151207_153915.jpg");
+            File input = new File("20151207_153915.jpg");
             BufferedImage image = ImageIO.read(input);
             byte[] data = ((DataBufferByte) image.getRaster().
                     getDataBuffer()).getData();
