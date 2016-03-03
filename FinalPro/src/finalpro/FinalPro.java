@@ -46,7 +46,7 @@ public class FinalPro {
             int h = image.getHeight();
 
             imagePixselsize = w + h;
-            int[] dataBuffInt = image.getRGB(0, 0, w, h, null, 0, w);
+            int[] dataBuffInt = image.getRGB(0, 0, w, h, null, 0, w);//function is not working
 
             Color c = new Color(dataBuffInt[100]);
 
