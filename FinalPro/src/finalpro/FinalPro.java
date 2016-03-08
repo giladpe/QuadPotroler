@@ -34,7 +34,8 @@ public class FinalPro {
         try {
             System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 //            File input = new File("C:/QuadPotroler/FinalPro/src/images/20151207_153915.jpg");
-            File input = new File("C:/QuadPotroler/FinalPro/src//images/20151207_153915.jpg");
+            File input = new File("C:/QuadPotroler/FinalPro/src/images/park.png");
+            
 //            FileChooser fc = new FileChooser();
 //            File input = fc.showOpenDialog(null);
             BufferedImage image = ImageIO.read(input);
@@ -43,7 +44,7 @@ public class FinalPro {
 
             imagePixselsize = w + h;
             int[] dataBuffInt = image.getRGB(0, 0, w, h, null, 0, w);//function is not working
-
+threshholding("C:/QuadPotroler/FinalPro/src/images/park.png");
             Color c = new Color(dataBuffInt[100]);
 
             double r = (c.getRed());   // = (dataBuffInt[100] >> 16) & 0xFF
@@ -59,16 +60,16 @@ public class FinalPro {
 
     }
 
-    public static Mat threshholding() {
+    public static Mat threshholding(String path) {
         Mat destination = null;
         Mat source = null;
         try {
             System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-            source = Imgcodecs.imread("C:/QuadPotroler/FinalPro/src/images/20151207_153915.jpg", Imgcodecs.CV_LOAD_IMAGE_COLOR);
+            source = Imgcodecs.imread(path, Imgcodecs.CV_LOAD_IMAGE_COLOR);
             destination = new Mat(source.rows(), source.cols(), source.type());
             destination = source;
             Imgproc.threshold(source, destination, 127, 255, Imgproc.THRESH_TOZERO);
-            Imgcodecs.imwrite("C:/QuadPotroler/FinalPro/src/images/threshdold.jpg", destination);
+            Imgcodecs.imwrite("C:/QuadPotroler/FinalPro/src/images/threshdold.png", destination);
 
         } catch (Exception e) {
             System.out.println("error: " + e.getMessage());
