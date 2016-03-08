@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.io.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
+import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -27,12 +28,15 @@ public class FinalPro {
 
         double percentege = 0;
         int imagePixselsize = 0;
-   //     imageToGray();
+   //     imageToGray
+
 
         try {
             System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-            File input = new File("C:/QuadPotroler/FinalPro/src/images/20151207_153915.jpg");
-
+//            File input = new File("C:/QuadPotroler/FinalPro/src/images/20151207_153915.jpg");
+            File input = new File("C:/QuadPotroler/FinalPro/src//images/20151207_153915.jpg");
+//            FileChooser fc = new FileChooser();
+//            File input = fc.showOpenDialog(null);
             BufferedImage image = ImageIO.read(input);
             int w = image.getWidth();
             int h = image.getHeight();
@@ -42,10 +46,10 @@ public class FinalPro {
 
             Color c = new Color(dataBuffInt[100]);
 
-            int r = (c.getRed());   // = (dataBuffInt[100] >> 16) & 0xFF
-            int g = (c.getGreen()); // = (dataBuffInt[100] >> 8)  & 0xFF
-            int b = (c.getBlue());  // = (dataBuffInt[100] >> 0)  & 0xFF
-            int a = (c.getAlpha()); // = (dataBuffInt[100] >> 24) & 0xFF
+            double r = (c.getRed());   // = (dataBuffInt[100] >> 16) & 0xFF
+            double g = (c.getGreen()); // = (dataBuffInt[100] >> 8)  & 0xFF
+            double b = (c.getBlue());  // = (dataBuffInt[100] >> 0)  & 0xFF
+            double a = (c.getAlpha()); // = (dataBuffInt[100] >> 24) & 0xFF
 
             percentege = ((r + g + b + a) / 1020) * 100;
             System.out.println(percentege + "%");
