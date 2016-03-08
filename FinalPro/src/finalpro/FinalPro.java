@@ -5,23 +5,15 @@
  */
 package finalpro;
 
-import static com.sun.javafx.runtime.SystemProperties.getCodebase;
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 
 import java.io.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import javax.imageio.ImageIO;
-import javax.rmi.CORBA.Util;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.Scalar;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
