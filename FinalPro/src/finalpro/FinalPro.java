@@ -10,7 +10,6 @@ import java.awt.Color;
 import java.io.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
-import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -28,14 +27,15 @@ public class FinalPro {
 
         double percentege = 0;
         int imagePixselsize = 0;
-   //     imageToGray
-
+        String fileImage = "";
+        //     imageToGray
 
         try {
             System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 //            File input = new File("C:/QuadPotroler/FinalPro/src/images/20151207_153915.jpg");
-            File input = new File("C:/QuadPotroler/FinalPro/src/images/park.png");
-            
+            fileImage = threshholding("C:/QuadPotroler/FinalPro/src/images/park.png");
+            File input = new File(fileImage);
+
 //            FileChooser fc = new FileChooser();
 //            File input = fc.showOpenDialog(null);
             BufferedImage image = ImageIO.read(input);
@@ -44,7 +44,7 @@ public class FinalPro {
 
             imagePixselsize = w + h;
             int[] dataBuffInt = image.getRGB(0, 0, w, h, null, 0, w);//function is not working
-threshholding("C:/QuadPotroler/FinalPro/src/images/park.png");
+
             Color c = new Color(dataBuffInt[100]);
 
             double r = (c.getRed());   // = (dataBuffInt[100] >> 16) & 0xFF
@@ -60,22 +60,23 @@ threshholding("C:/QuadPotroler/FinalPro/src/images/park.png");
 
     }
 
-    public static Mat threshholding(String path) {
+    public static String threshholding(String path) {
         Mat destination = null;
         Mat source = null;
+        String retString = "";
         try {
             System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-            source = Imgcodecs.imread(path, Imgcodecs.CV_LOAD_IMAGE_COLOR);
+            source = Imgcodecs.imread("C:/QuadPotroler/FinalPro/src/images/20151207_153915.jpg", Imgcodecs.CV_LOAD_IMAGE_COLOR);
             destination = new Mat(source.rows(), source.cols(), source.type());
             destination = source;
             Imgproc.threshold(source, destination, 127, 255, Imgproc.THRESH_TOZERO);
-            Imgcodecs.imwrite("C:/QuadPotroler/FinalPro/src/images/threshdold.png", destination);
-
+            Imgcodecs.imwrite("C:/QuadPotroler/FinalPro/src/images/threshdold_img.jpg", destination);
+            retString = "C:/QuadPotroler/FinalPro/src/images/threshdold_img.jpg";
         } catch (Exception e) {
             System.out.println("error: " + e.getMessage());
         }
 
-        return destination;
+        return retString;
     }
 
     public static void imageToGray() {
